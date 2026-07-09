@@ -455,4 +455,113 @@
   font-size: 12px;
 }
 
+.studentDetails-wrapper{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
+.studentDetails-header{
+  height: 8vh;
+  /* text-align: center; */
+  background-color: #eee;
+  /* padding: 1vh; */
+  min-width: 40%;
+  border-radius: 10px;
+  margin-top: 2vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.studentDetails-header h1{
+  color: #0e39e8;
+  text-align: center;
+}
+
+.studentDetails-box{
+  display: flex;
+  /* flex-wrap: wrap; */
+  background-color: teal;
+  height: 48vh;
+  margin: 2vh;
+  width: 75%;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  /* padding: 5vh; */
+  gap: 7vh;
+  box-shadow: 5px 5px 10px rgb(21, 170, 224);
+}
+
+.studentDetails-box img{
+  height: 200px;
+  width: 200px;
+  border-radius: 10px;
+}
+
+.studentDetails-data{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1vh;
+  height: 40vh;
+  color: #eee;
+  font-size: 18px;
+}
+
+.studentDetails-data p{
+  display: flex;
+}
+
+.studentData-label{
+  width: 80px;
+  font-weight: 500;
+}
+
+.studentData-colon{
+  width: 20px;
+  font-weight: 500;
+}
+
+.studentDetails-btn{
+  margin-top: 2vh;
+  display: flex;
+  justify-content: space-around;
+  width: 75%;
+}
+
+.studentDetails-btn button{
+  width: 44%;
+  border: none;
+  outline: none;
+  padding: 1vh;
+  font-size: 20px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.studentDetails-btn button:hover{
+  transform: scale(1.1);
+  transition: 0.4s
+}
+
+.edit-btn{
+  background-color: yellow;
+  /* box-shadow: 5px 5px 10px yellowgreen; */
+  /* color: white; */
+}
+
+.delete-btn{
+  background-color: red;
+  color: white;
+  /* box-shadow: 5px 5px 5px rgb(244, 115, 115); */
+}
+
+.studentDetails-cancel-btn{
+  margin-top: 1vh;
+  background-color: blue;
+  color: white;
+}

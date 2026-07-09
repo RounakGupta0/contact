@@ -1,12 +1,15 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const apiUrl = import.meta.env.VITE_API_URL
 
 const StudentData = () => {
 
     const [studentData, setStudentData] = useState({})
+    const [loading, setLoading] = useState(false)
+
+    const navigate = useNavigate()
 
     const { id } = useParams()
     console.log(id)
@@ -16,6 +19,7 @@ const StudentData = () => {
     }, [])
 
     const StudentDetails = async () => {
+        setLoading(true)
         console.log('function call ho rha')
         try {
             const res = await axios.get(`${apiUrl}/contact/contactById/` + id, {
@@ -25,23 +29,67 @@ const StudentData = () => {
             })
             console.log(res)
             setStudentData(res.data.contact)
+            setLoading(false)
         }
         catch (err) {
+            console.log(err)
+            setLoading(false)
+        }
+    }
+
+    const deleteStudent = async()=>{
+        console.log('delete api call hua')
+        try
+        {
+            await axios.delete(`${apiUrl}/contact/${id}`,{
+                headers:{
+                    'Authorization' : `Bearer ${localStorage.getItem('token')}`
+                }
+            })
+            console.log('deleted that contact')
+            console.log(id)
+            navigate('/dashboard/student')
+        }
+        catch(err)
+        {
             console.log(err)
         }
     }
 
     return (
-        <div>
-            <h1>Student Details</h1>
-            <div key={studentData._id}>
-                <img src={studentData.imageUrl} alt="no image" />
-                <h2>{studentData.fullName}</h2>
-                <p>{studentData.email}</p>
-                <p>{studentData.phone}</p>
-                <p>{studentData.address}</p>
-                <p>{studentData.gender}</p>
+        <div className='studentDetails-wrapper'>
+            <div className='studentDetails-header'>
+                <h1>Student Details</h1>
             </div>
+            {
+                loading ?
+                    <div className='studentList-loaderBox'>
+                        <p className='studentList-loader'><i className="fa-solid fa-spinner fa-spin-pulse "></i></p>
+                    </div> :
+                    <div className='studentDetails-box' key={studentData._id}>
+                        <img src={studentData.imageUrl} alt="no image" />
+                        <div className='studentDetails-data'>
+                            <p><span className='studentData-label' >Name</span>     <span className='studentData-colon' >:</span> {studentData.fullName}</p>
+                            <p><span className='studentData-label' >Email</span>    <span className='studentData-colon' >:</span> {studentData.email}</p>
+                            <p><span className='studentData-label' >Phone</span>    <span className='studentData-colon' >:</span> {studentData.phone}</p>
+                            <p><span className='studentData-label' >Address</span>  <span className='studentData-colon' >:</span> {studentData.address}</p>
+                            <p><span className='studentData-label' >Gender</span>   <span className='studentData-colon' >:</span> {studentData.gender}</p>
+                        </div>
+                    </div>
+            }
+            {
+                !loading &&
+                <div className='studentDetails-btn'>
+                    <button className='edit-btn' type='button'><span><i className="fa-solid fa-pen-to-square"></i></span>Edit</button>
+                    <button onClick={deleteStudent} className='delete-btn' type='button'><span><i className="fa-solid fa-trash-can"></i></span>Delete</button>
+                </div>
+            }
+            {
+                !loading && 
+                <div className='studentDetails-btn'>
+                    <button onClick={()=>navigate('/dashboard/student')} className='studentDetails-cancel-btn'>Cancel</button>
+                </div>
+            }
         </div>
     )
 }
