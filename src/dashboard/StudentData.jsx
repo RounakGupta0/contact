@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import swal from 'sweetalert2'
 
 const apiUrl = import.meta.env.VITE_API_URL
 
@@ -8,6 +9,7 @@ const StudentData = () => {
 
     const [studentData, setStudentData] = useState({})
     const [loading, setLoading] = useState(false)
+    const [deleting, setDeleting] = useState(false)
 
     const navigate = useNavigate()
 
@@ -37,22 +39,40 @@ const StudentData = () => {
         }
     }
 
-    const deleteStudent = async()=>{
+    const deleteStudent = async () => {
         console.log('delete api call hua')
-        try
-        {
-            await axios.delete(`${apiUrl}/contact/${id}`,{
-                headers:{
-                    'Authorization' : `Bearer ${localStorage.getItem('token')}`
+        setDeleting(true)
+        try {
+            await axios.delete(`${apiUrl}/contact/${id}`, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
             })
             console.log('deleted that contact')
             console.log(id)
+            setDeleting(false)
             navigate('/dashboard/student')
         }
-        catch(err)
-        {
+        catch (err) {
             console.log(err)
+            setDeleting(false)
+        }
+    }
+
+    const deleteConfirmation = async () => {
+        const result = await swal.fire({
+            title: "Delete Student?",
+            text: "You won't be able to undo this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Delete",
+
+            // cancelButtonColor:'#3339f2',
+            confirmButtonColor:'#d33'
+        });
+
+        if (result.isConfirmed) {
+            deleteStudent()
         }
     }
 
@@ -81,13 +101,20 @@ const StudentData = () => {
                 !loading &&
                 <div className='studentDetails-btn'>
                     <button className='edit-btn' type='button'><span><i className="fa-solid fa-pen-to-square"></i></span>Edit</button>
-                    <button onClick={deleteStudent} className='delete-btn' type='button'><span><i className="fa-solid fa-trash-can"></i></span>Delete</button>
+                    <button onClick={deleteConfirmation} className='delete-btn' type='button'>
+                        {
+                            deleting && <span><i className="fa-solid fa-spinner fa-spin-pulse "></i> Deleting</span>
+                        }
+                        {
+                            !deleting && <span><i className="fa-solid fa-trash-can"></i> Delete</span>
+                        }
+                    </button>
                 </div>
             }
             {
-                !loading && 
+                !loading &&
                 <div className='studentDetails-btn'>
-                    <button onClick={()=>navigate('/dashboard/student')} className='studentDetails-cancel-btn'>Cancel</button>
+                    <button onClick={() => navigate('/dashboard/student')} className='studentDetails-cancel-btn'>Cancel</button>
                 </div>
             }
         </div>
