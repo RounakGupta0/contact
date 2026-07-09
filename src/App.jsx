@@ -8,6 +8,8 @@ import { ToastContainer } from 'react-toastify'
 import Home from './dashboard/Home'
 import AddStudent from './dashboard/AddStudent'
 import Student from './dashboard/Student'
+// import StudentDetails from './dashboard/StudentDetails'
+import StudentData from './dashboard/StudentData'
 
 const App = () => {
   return (
@@ -27,6 +29,8 @@ const App = () => {
             <Route path='home' element={<Home />} />
             <Route path='add-student' element={<AddStudent />} />
             <Route path='student' element={<Student />} />
+            {/* <Route path='student/studentDetails' element={<StudentDetails />} /> */}
+            <Route path='student/studentData/:id' element={<StudentData/>}/>
           </Route>
         </Routes>
       </div>

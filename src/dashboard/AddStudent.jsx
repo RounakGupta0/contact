@@ -1,5 +1,7 @@
 import axios from 'axios'
 import React, { useState } from 'react'
+import { toast } from 'react-toastify'
+import defaultIcon from '../assets/default image.webp'
 
 const AddStudent = () => {
 
@@ -10,6 +12,7 @@ const AddStudent = () => {
   const [gender, setGender] = useState('Male')
   const [image, setImage] = useState(null)
   const [previewUrl, setPreviewUrl] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const apiUrl = import.meta.env.VITE_API_URL
 
@@ -17,6 +20,8 @@ const AddStudent = () => {
     e.preventDefault()
 
     try {
+
+      setLoading(true)
 
       console.log(localStorage.getItem('token'))
       console.log(fullName, email, phone, gender, address, image)
@@ -39,12 +44,36 @@ const AddStudent = () => {
           'Content-Type': 'multipart/form-data'
         }
       })
+
+      setLoading(false)
+
+      toast.success('Student Added Successfully 🎉', {
+        position: "top-right",
+        autoClose: 3500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
       clearForm()
       console.log(res)
 
     }
     catch (err) {
       console.log(err)
+      toast.error('Something went wrong', {
+        position: "top-right",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      setLoading(false)
     }
 
   }
@@ -79,7 +108,7 @@ const AddStudent = () => {
   }
 
   return (
- 
+
     <div className='add-student'>
       <div className='add-studentHeader'>
         <h2>Add Student</h2>
@@ -89,27 +118,27 @@ const AddStudent = () => {
           <div className='add-Form-part'>
             <div className='add-formInput-box'>
               <p>Full Name</p>
-              <input className='add-FormInput' onChange={(e) => setFullName(e.target.value)} value={fullName} type="text" placeholder='Full Name' />
+              <input className='add-FormInput' onChange={(e) => setFullName(e.target.value)} value={fullName} type="text" placeholder='👤 Full Name' />
             </div >
             <div className='add-formInput-box'>
               <p>Email</p>
-              <input className='add-FormInput' onChange={(e) => setEmail(e.target.value)} value={email} type="text" placeholder='Email' />
+              <input className='add-FormInput' onChange={(e) => setEmail(e.target.value)} value={email} type="text" placeholder='📧 Email' />
             </div>
             <div className='add-formInput-box'>
               <p>Phone</p>
-              <input className='add-FormInput' onChange={(e) => setPhone(e.target.value)} value={phone} type="text" placeholder='Phone' />
+              <input className='add-FormInput' onChange={(e) => setPhone(e.target.value)} value={phone} type="text" placeholder='📞 Phone' />
             </div>
           </div>
           <div className='add-Form-part'>
             <div className='add-formInput-box'>
               <p>Address</p>
-              <input className='add-FormInput' onChange={(e) => setAddress(e.target.value)} value={address} type="text" placeholder='Address' />
+              <input className='add-FormInput' onChange={(e) => setAddress(e.target.value)} value={address} type="text" placeholder='📍 Address' />
             </div>
             <div className='add-formInput-box'>
               <p>Gender</p>
               <select className='add-FormInput' value={gender} onChange={(e) => setGender(e.target.value)}>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
+                <option value="Male">👦 Male</option>
+                <option value="Female">👧 Female</option>
               </select>
             </div>
             <div className='add-formInput-box'>
@@ -119,13 +148,19 @@ const AddStudent = () => {
           </div>
         </div>
         {
-          previewUrl &&
-          <div className='preview-addStudentForm'>
-            <img src={previewUrl} alt="no image" />
-          </div>
+          previewUrl ?
+            <div className='preview-addStudentForm'>
+              <p>Preview Image</p>
+              <img src={previewUrl} alt="no image" />
+            </div>
+            :
+            <div className='preview-addStudentForm'>
+              <p>Preview Image <span><i className="fa-solid fa-arrow-right-long"></i></span></p>
+              <img src={defaultIcon} alt="no image" />
+            </div>
         }
         <div className='addStudent-btnwrapper'>
-          <button className='addStudent-btn' type='submit' >Add Student</button>
+          <button className='addStudent-btn' type='submit' >{loading && <span ><i className='loader' className="fa-solid fa-spinner fa-spin-pulse"></i></span>}{loading ? ' Adding Contact' : ' Add Student'}</button>
         </div>
       </form>
     </div>

@@ -17,7 +17,7 @@ const Dashboard = () => {
         <div className='sideNav'>
           <div className='sideNav-header'>
             <img src={photoIcon} alt="icon" />
-            <h2>Rounak </h2>
+            <h2>{localStorage.getItem('fullName')}</h2>
           </div>
           <div className='sideNavLink-wrapper'>
             <Link className='sideNav-Link' to='/dashboard/home'><i className="fa-solid fa-house"></i> Home</Link>
