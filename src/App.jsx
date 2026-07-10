@@ -10,6 +10,7 @@ import AddStudent from './dashboard/AddStudent'
 import Student from './dashboard/Student'
 // import StudentDetails from './dashboard/StudentDetails'
 import StudentData from './dashboard/StudentData'
+import EditStudent from './dashboard/EditStudent'
 
 const App = () => {
   return (
@@ -21,7 +22,7 @@ const App = () => {
       </nav> */}
       <div className='app-wrapper'>
         <Routes>
-          <Route path='/' element={<Login />} />
+          <Route path='/' element={<Login/>} />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/dashboard' element={<Dashboard />} >
@@ -31,6 +32,7 @@ const App = () => {
             <Route path='student' element={<Student />} />
             {/* <Route path='student/studentDetails' element={<StudentDetails />} /> */}
             <Route path='student/studentData/:id' element={<StudentData/>}/>
+            <Route path='student/edit-student/:id' element={<EditStudent/>} />
           </Route>
         </Routes>
       </div>

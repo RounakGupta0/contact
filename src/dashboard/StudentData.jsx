@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import swal from 'sweetalert2'
 
 const apiUrl = import.meta.env.VITE_API_URL
@@ -21,21 +22,33 @@ const StudentData = () => {
     }, [])
 
     const StudentDetails = async () => {
-        setLoading(true)
         console.log('function call ho rha')
         try {
+            setLoading(true)
             const res = await axios.get(`${apiUrl}/contact/contactById/` + id, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
             })
+            // console.log(res.data.contact)
             console.log(res)
             setStudentData(res.data.contact)
             setLoading(false)
         }
         catch (err) {
             console.log(err)
-            setLoading(false)
+            await toast.error('Contact not found', {
+                position: "top-right",
+                autoClose: 4000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                onClose:()=> navigate('/dashboard/student')
+            });
+            // navigate('/dashboard/student')
         }
     }
 
@@ -68,7 +81,7 @@ const StudentData = () => {
             confirmButtonText: "Delete",
 
             // cancelButtonColor:'#3339f2',
-            confirmButtonColor:'#d33'
+            confirmButtonColor: '#d33'
         });
 
         if (result.isConfirmed) {
@@ -89,18 +102,18 @@ const StudentData = () => {
                     <div className='studentDetails-box' key={studentData._id}>
                         <img src={studentData.imageUrl} alt="no image" />
                         <div className='studentDetails-data'>
-                            <p><span className='studentData-label' >Name</span>     <span className='studentData-colon' >:</span> {studentData.fullName}</p>
-                            <p><span className='studentData-label' >Email</span>    <span className='studentData-colon' >:</span> {studentData.email}</p>
-                            <p><span className='studentData-label' >Phone</span>    <span className='studentData-colon' >:</span> {studentData.phone}</p>
-                            <p><span className='studentData-label' >Address</span>  <span className='studentData-colon' >:</span> {studentData.address}</p>
-                            <p><span className='studentData-label' >Gender</span>   <span className='studentData-colon' >:</span> {studentData.gender}</p>
+                            <p><span className='studentData-label' >Name</span>    <span className='studentData-colon' >:</span> {studentData.fullName}</p>
+                            <p><span className='studentData-label' >Email</span>   <span className='studentData-colon' >:</span> {studentData.email}</p>
+                            <p><span className='studentData-label' >Phone</span>   <span className='studentData-colon' >:</span> {studentData.phone}</p>
+                            <p><span className='studentData-label' >Address</span> <span className='studentData-colon' >:</span> {studentData.address}</p>
+                            <p><span className='studentData-label' >Gender</span>  <span className='studentData-colon' >:</span> {studentData.gender}</p>
                         </div>
                     </div>
             }
             {
                 !loading &&
                 <div className='studentDetails-btn'>
-                    <button className='edit-btn' type='button'><span><i className="fa-solid fa-pen-to-square"></i></span>Edit</button>
+                    <button onClick={()=>navigate('/dashboard/student/edit-student/'+studentData._id)} className='edit-btn' type='button'><span><i className="fa-solid fa-pen-to-square"></i></span>Edit</button>
                     <button onClick={deleteConfirmation} className='delete-btn' type='button'>
                         {
                             deleting && <span><i className="fa-solid fa-spinner fa-spin-pulse "></i> Deleting</span>

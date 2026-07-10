@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 import defaultIcon from '../assets/default image.webp'
+import { Link, useNavigate } from 'react-router-dom'
 
 const AddStudent = () => {
 
@@ -13,6 +14,8 @@ const AddStudent = () => {
   const [image, setImage] = useState(null)
   const [previewUrl, setPreviewUrl] = useState('')
   const [loading, setLoading] = useState(false)
+
+  const navigate = useNavigate()
 
   const apiUrl = import.meta.env.VITE_API_URL
 
@@ -56,6 +59,7 @@ const AddStudent = () => {
         draggable: true,
         progress: undefined,
         theme: "light",
+        // onClose:()=> navigate('/dashboard/student')
       });
       clearForm()
       console.log(res)
@@ -143,7 +147,7 @@ const AddStudent = () => {
             </div>
             <div className='add-formInput-box'>
               <p>Profile Pic</p>
-              <input className='add-FormInput' onChange={handleFileChange} type="file" placeholder='Image' />
+              <input required className='add-FormInput' onChange={handleFileChange} type="file" placeholder='Image' />
             </div>
           </div>
         </div>

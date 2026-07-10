@@ -115,6 +115,43 @@
 
 /* -------dashboard------- */
 
+.Dashboard-loginFailed{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.Dashboard-loginFailed h2{
+  border-bottom: 2px dashed grey;
+  margin-bottom: 2vh;
+}
+
+.Dashboard-loginFailed-btn{
+  display: flex;
+  gap: 2vh;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.Dashboard-loginFailed-btn button{
+  cursor: pointer;
+  padding: 1vh;
+  width: 15%;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  color: #eee;
+}
+
+.Dashboard-loginFailed-btn button:hover{
+  transform: scale(1.1);
+  transition: 0.4s;
+}
+
 .dashboard-wrapper {
   height: 100vh;
   width: 100%;
@@ -211,6 +248,7 @@
   outline: none;
   border-radius: 5px;
   color: whitesmoke;
+  cursor: pointer;
 }
 
 .logout-btn:hover {
@@ -388,13 +426,13 @@
   background-color: #eee;
   padding: 5px;
   border-radius: 10px;
-  margin-bottom: 1vh;
-  margin-top: 1vh;
+  margin-bottom: 2vh;
+  margin-top: 2vh;
   color: #0e39e8;
 }
 
 .studentList-loaderBox {
-  height: 76vh;
+  height: 74vh;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -410,8 +448,10 @@
   height: 76vh;
   display: flex;
   flex-wrap: wrap;
+  align-items: flex-start !important;
   width: 100%;
-  justify-content: space-evenly;
+  justify-content: center ;
+  align-content: flex-start;
   gap: 10px;
   overflow-y: auto;
 }
@@ -425,6 +465,12 @@
   justify-content: space-evenly;
   /* padding: 10px; */
   align-items: center;
+  cursor: pointer;
+}
+
+.studentList-box:hover{
+  transform: scale(0.95);
+  transition: 0.3s;
 }
 
 .studentList-box img {

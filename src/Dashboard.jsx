@@ -1,38 +1,66 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import photoIcon from './assets/profile photo.png'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 
 const Dashboard = () => {
 
+  const [isLogin, setLogin] = useState(false)
+
+  useEffect(() => {
+    checkLoginStatus()
+  }, [])
+
   const navigate = useNavigate()
 
-  const Logout =()=>{
+  const Logout = () => {
     localStorage.clear()
     navigate('/login')
   }
 
+  const checkLoginStatus = () => {
+    if (localStorage.getItem('token')) {
+      setLogin(true)
+    }
+    else {
+      setLogin(false)
+    }
+  }
+
   return (
     <div className='dashboard-wrapper'>
-      <div className='dashboard-box'>
-        <div className='sideNav'>
-          <div className='sideNav-header'>
-            <img src={photoIcon} alt="icon" />
-            <h2>{localStorage.getItem('fullName')}</h2>
+      {
+        isLogin ?
+          <div className='dashboard-box'>
+            <div className='sideNav'>
+              <div className='sideNav-header'>
+                <img src={photoIcon} alt="icon" />
+                <h2>{localStorage.getItem('fullName')}</h2>
+              </div>
+              <div className='sideNavLink-wrapper'>
+                <Link className='sideNav-Link' to='/dashboard/home'><i className="fa-solid fa-house"></i> Home</Link>
+                <Link className='sideNav-Link' to='/dashboard/add-student'><i className="fa-solid fa-plus"></i> Add Student</Link>
+                <Link className='sideNav-Link' to='/dashboard/student'><i className="fa-solid fa-address-book"></i> Student List</Link>
+                {/* <Link className='sideNav-Link' to='/signup'><i className="fa-solid fa-arrow-right-from-bracket"></i> Logout</Link> */}
+              </div>
+              <div className='Logoutbtn-wrapper'>
+                <button className='logout-btn' onClick={Logout}><i className="fa-solid fa-arrow-right-from-bracket"></i> Logout</button>
+              </div>
+            </div>
+            <div className='dashboard-content'>
+              <Outlet />
+            </div>
           </div>
-          <div className='sideNavLink-wrapper'>
-            <Link className='sideNav-Link' to='/dashboard/home'><i className="fa-solid fa-house"></i> Home</Link>
-            <Link className='sideNav-Link' to='/dashboard/add-student'><i className="fa-solid fa-plus"></i> Add Student</Link>
-            <Link className='sideNav-Link' to='/dashboard/student'><i className="fa-solid fa-address-book"></i> Student List</Link>
-            {/* <Link className='sideNav-Link' to='/signup'><i className="fa-solid fa-arrow-right-from-bracket"></i> Logout</Link> */}
+          :
+          <div className='dashboard-box'>
+            <div className='Dashboard-loginFailed'>
+              <h2>Login Credentials Not Found</h2>
+              <div className='Dashboard-loginFailed-btn'>
+                <button onClick={()=>{navigate('/login')}} style={{ backgroundColor: 'blue' }}>Login</button>
+                <button onClick={()=>{navigate('/signup')}} style={{ backgroundColor: 'red' }}>Signup</button>
+              </div>
+            </div>
           </div>
-          <div className='Logoutbtn-wrapper'>
-            <button className='logout-btn' onClick={Logout}><i className="fa-solid fa-arrow-right-from-bracket"></i> Logout</button>
-          </div>
-        </div>
-        <div className='dashboard-content'>
-          <Outlet/>
-        </div>
-      </div>
+      }
     </div>
   )
 }
