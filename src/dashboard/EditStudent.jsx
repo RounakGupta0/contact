@@ -28,7 +28,7 @@ const EditStudent = () => {
 
   const StudentDetails = async () => {
     setLoading(true)
-    console.log('function call ho rha')
+    // console.log('function call ho rha')
     try {
       setLoading(true)
       const res = await axios.get(`${apiUrl}/contact/contactById/` + id, {
@@ -78,7 +78,7 @@ const EditStudent = () => {
         editedContact.append('photo', image)
       }
 
-      console.log(editedContact)
+      // console.log(editedContact)
 
       const res = await axios.put(`${apiUrl}/contact/update/${id}`, editedContact, {
         headers: {
@@ -99,7 +99,7 @@ const EditStudent = () => {
         // onClose:()=> navigate('/dashboard/student')
       });
       clearForm()
-      console.log(res)
+      // console.log(res)
       setEditing(false)
       navigate(`/dashboard/student/studentData/${id}`)
     }

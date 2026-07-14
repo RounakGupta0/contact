@@ -32,7 +32,7 @@ const Signup = () => {
             }),
         setLoading(false))
         }
-        console.log('function still running')
+        // console.log('function still running')
 
         try {
             const newuser = {
@@ -41,9 +41,9 @@ const Signup = () => {
                 phone: phone,
                 password: password
             }
-            console.log(newuser)
+            // console.log(newuser)
             const res = await axios.post(`${apiUrl}/user/signup`, newuser)
-            console.log(res)
+            // console.log(res)
             setLoading(false)
             await toast.success('Account Created', {
                 position: "top-right",

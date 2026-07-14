@@ -15,14 +15,14 @@ const StudentData = () => {
     const navigate = useNavigate()
 
     const { id } = useParams()
-    console.log(id)
+    // console.log(id)
 
     useEffect(() => {
         StudentDetails()
     }, [])
 
     const StudentDetails = async () => {
-        console.log('function call ho rha')
+        // console.log('function call ho rha')
         try {
             setLoading(true)
             const res = await axios.get(`${apiUrl}/contact/contactById/` + id, {
@@ -31,7 +31,7 @@ const StudentData = () => {
                 }
             })
             // console.log(res.data.contact)
-            console.log(res)
+            // console.log(res)
             setStudentData(res.data.contact)
             setLoading(false)
         }
@@ -53,16 +53,16 @@ const StudentData = () => {
     }
 
     const deleteStudent = async () => {
-        console.log('delete api call hua')
+        // console.log('delete api call hua')
         setDeleting(true)
         try {
-            await axios.delete(`${apiUrl}/contact/${id}`, {
+            await axios.delete(`${apiUrl}/contact/${id}`, { 
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
             })
-            console.log('deleted that contact')
-            console.log(id)
+            // console.log('deleted that contact')
+            // console.log(id)
             setDeleting(false)
             navigate('/dashboard/student')
         }

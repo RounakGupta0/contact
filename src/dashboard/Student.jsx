@@ -5,7 +5,6 @@ import { toast } from 'react-toastify';
 
 const apiUrl = import.meta.env.VITE_API_URL
 
-
 const Student = () => {
 
   useEffect(() => {
@@ -18,7 +17,6 @@ const Student = () => {
   const [loading, setLoading] = useState(false)
 
   const getStudentList = async () => {
-    // console.log('student list ka function call ho gya')
     setLoading(true)
     try {
       const res = await axios.get(`${apiUrl}/contact/get-contact`, {
@@ -26,7 +24,6 @@ const Student = () => {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       })
-      // console.log(res)
       setStudentList(res.data.contacts)
       setLoading(false)
     }

@@ -23,9 +23,9 @@ const Signup = () => {
         email: email,
         password: password
       }
-      console.log(newuser)
+      // console.log(newuser)
       const res = await axios.post(`${apiUrl}/user/login`, newuser)
-      console.log(res.data)
+      // console.log(res.data)
       setLoading(false)
       localStorage.setItem('token',res.data.token)
       localStorage.setItem('fullName',res.data.fullName)

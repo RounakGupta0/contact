@@ -26,8 +26,8 @@ const AddStudent = () => {
 
       setLoading(true)
 
-      console.log(localStorage.getItem('token'))
-      console.log(fullName, email, phone, gender, address, image)
+      // console.log(localStorage.getItem('token'))
+      // console.log(fullName, email, phone, gender, address, image)
 
       const newContact = new FormData()
       newContact.append('fullName', fullName)
@@ -39,7 +39,7 @@ const AddStudent = () => {
         newContact.append('photo', image)
       }
 
-      console.log(newContact)
+      // console.log(newContact)
 
       const res = await axios.post(`${apiUrl}/contact/add-contact`, newContact, {
         headers: {
@@ -62,7 +62,7 @@ const AddStudent = () => {
         // onClose:()=> navigate('/dashboard/student')
       });
       clearForm()
-      console.log(res)
+      // console.log(res)
 
     }
     catch (err) {
