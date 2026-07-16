@@ -48,6 +48,7 @@ const AddStudent = () => {
         }
       })
 
+      console.log(res)
       setLoading(false)
 
       toast.success('Student Added Successfully 🎉', {
@@ -63,6 +64,8 @@ const AddStudent = () => {
       });
       clearForm()
       // console.log(res)
+
+      navigate(`/dashboard/student/studentData/${res.data.result._id}`)
 
     }
     catch (err) {
